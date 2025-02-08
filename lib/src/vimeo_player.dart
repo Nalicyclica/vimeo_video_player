@@ -9,6 +9,10 @@ class VimeoVideoPlayer extends StatefulWidget {
   /// [videoId] is required and cannot be empty
   final String videoId;
 
+  /// Defines the hash for the unlisted vimeo video
+  /// [privacyHash] is needed only for unlisted video.
+  final String? privacyHash;
+
   /// Used to auto-play the video once initialized
   /// Default value: [false]
   final bool isAutoPlay;
@@ -60,6 +64,7 @@ class VimeoVideoPlayer extends StatefulWidget {
   VimeoVideoPlayer({
     super.key,
     required this.videoId,
+    this.privacyHash,
     this.isAutoPlay = false,
     this.isLooping = false,
     this.isMuted = false,
@@ -188,7 +193,8 @@ class _VimeoVideoPlayerState extends State<VimeoVideoPlayer> {
         '&title=${widget.showTitle}'
         '&byline=${widget.showByline}'
         '&controls=${widget.showControls}'
-        '&dnt=${widget.enableDNT}';
+        '&dnt=${widget.enableDNT}'
+        '${widget.privacyHash != null ? '&h=${widget.privacyHash}' : ''}';
   }
 
   /// Manage vimeo player events received from the WebView
